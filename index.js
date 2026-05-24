@@ -31,18 +31,18 @@ const run = async () => {
 
     const bookingsCollection = db.collection("bookings");
 
-    app.post("/bookings", async (req, res) => {
-      const bookingData = req.body;
-      const result = await bookingsCollection.insertOne(bookingData);
-      res.status(201).send(result);
-    });
-    
-
     app.get("/my-bookings", async (req, res) => {
       const cursor = bookingsCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });
+
+    app.post("/bookings", async (req, res) => {
+      const bookingData = req.body;
+      const result = await bookingsCollection.insertOne(bookingData);
+      res.status(201).send(result);
+    });
+
 
     app.delete("/bookings/:id", async (req, res) => {
       const id = req.params.id;
@@ -93,7 +93,6 @@ const run = async () => {
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   }
   finally {
-    // No need as a beginning to end with a single connection to MongoDB.
     // await client.close();
   }
 };
